@@ -15,7 +15,7 @@ class WaterLevelSensor:
         
 
 if __name__ == "__main__":
-    sensor = WaterLevelSensor(18, 17)
+    sensor = WaterLevelSensor(23, 22)
     while True:
         print('Distance: ', sensor.get_water_level())
         sleep(1)
