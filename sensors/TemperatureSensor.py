@@ -6,7 +6,7 @@ TEMPERATURE_OFFSET = -20.0
 class TemperatureSensor:
     def __init__(self):
         self._probe = W1ThermSensor()
-    
+
     def get_temperature(self) -> float:
         return self._probe.get_temperature() + TEMPERATURE_OFFSET
 

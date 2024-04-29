@@ -3,7 +3,11 @@ from gpiozero import PWMOutputDevice, DigitalOutputDevice
 
 class LedStrip:
     def __init__(
-        self, first_enable_pin: int, second_enable_pin: int, pwm_pin: int, max_pwm: float = 1.0
+        self,
+        first_enable_pin: int,
+        second_enable_pin: int,
+        pwm_pin: int,
+        max_pwm: float = 1.0,
     ) -> None:
         self.first_enable_pin = first_enable_pin
         self.second_enable_pin = second_enable_pin
