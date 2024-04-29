@@ -1,6 +1,6 @@
 from gpiozero import DigitalOutputDevice
 from typing import List
-from time import sleep
+from time import time, sleep
 
 DEFAULT_STEP_SEQUENCE = [
     [1, 0, 0, 1],
@@ -26,14 +26,18 @@ class Feeder:
         for pin in self._control_pins:
             pin.off()
 
+    def _wait_for_step_finish(self):
+        step_start = time()
+        while time() - step_start < STEP_SLEEP:
+            pass
+
     def _rotate(self, number_of_steps: int, pins_list: List[DigitalOutputDevice]):
-        print(pins_list)
         for step in range(number_of_steps):
             for pin, pin_value in zip(
                 pins_list, DEFAULT_STEP_SEQUENCE[step % len(DEFAULT_STEP_SEQUENCE)]
             ):
                 pin.value = pin_value
-            sleep(STEP_SLEEP)
+            self._wait_for_step_finish()
 
     def dispense(self, number_of_steps: int):
         self._rotate(number_of_steps, self._control_pins)
