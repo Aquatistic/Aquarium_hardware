@@ -1,5 +1,5 @@
-from HardwareSensors.FoodLevelSensor import FoodLevelSensor
-from SensorService import SensorService
+from sensors.HardwareSensors.FoodLevelSensor import FoodLevelSensor
+from sensors.SensorService import SensorService
 
 from datetime import datetime
 

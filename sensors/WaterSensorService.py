@@ -1,5 +1,5 @@
-from HardwareSensors.WaterLevelSensor import WaterLevelSensor
-from SensorService import SensorService
+from sensors.HardwareSensors.WaterLevelSensor import WaterLevelSensor
+from sensors.SensorService import SensorService
 
 from datetime import datetime
 

@@ -1,5 +1,5 @@
-from HardwareSensors.TemperatureSensor import TemperatureSensor
-from SensorService import SensorService
+from sensors.HardwareSensors.TemperatureSensor import TemperatureSensor
+from sensors.SensorService import SensorService
 
 from datetime import datetime
 
