@@ -5,7 +5,7 @@ from threading import Thread
 
 class SensorService(ABC):
     @abstractmethod
-    def get_measurement_json(self) -> str:
+    def get_measurement_json(self) -> dict:
         pass
 
     def set_sensor_id(self, sensor_id: int) -> None:
@@ -18,11 +18,15 @@ class SensorService(ABC):
         self._backend_interactor = backedn_interactor
     
     def run(self) -> Thread:
-        worker = Thread(self._run_measurements)
+        worker = Thread(target=self._run_measurements)
         worker.start()
         return worker
     
-    @abstractmethod
-    def _run_measurements(self):
-        pass
+    def _run_measurements(self) -> None:
+        while True:
+            loop_start = time()
+            if self._backend_interactor:
+                self._backend_interactor.send_measurement(self.get_measurement_json(), self._sensor_id)
+            while time() - loop_start < self._measurement_period:
+                pass
     
