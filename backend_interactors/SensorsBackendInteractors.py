@@ -8,6 +8,9 @@ class SensorsBackendInteractors:
         self._backend_destination = backend_destination
         self._readings_period = readings_period
         
+    def send_measurement(self, measurement: str):
+        pass
+        
     def run(self):
         while True:
             loop_start = time()
