@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from backend_interactors.SensorsBackendInteractors import SensorsBackendInteractors
 from threading import Thread
+from time import time
 
 
 class SensorService(ABC):
