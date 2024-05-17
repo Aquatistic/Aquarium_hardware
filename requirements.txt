@@ -1,6 +1,6 @@
 gpiozero==2.0.1
 mypy==0.942
-black==22.3.0
+black==24.3.0
 pylint==2.12.2
 w1thermsensor==2.3.0
 requests==2.31.0
