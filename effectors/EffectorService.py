@@ -1,9 +1,10 @@
 from abc import ABC, abstractmethod
+from typing import Dict
 
 
 class EffectorService(ABC):
     @abstractmethod
-    def activate_effector(self) -> None:
+    def activate_effector(self, input_dict: Dict[str]) -> None:
         pass
     
     def set_effector_id(self, effector_id: int) -> None:
