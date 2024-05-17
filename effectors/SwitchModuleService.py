@@ -1,14 +1,15 @@
 from effectors.HardwareEffectors.SwitchModule import SwitchModule
 from effectors.EffectorService import EffectorService
+from typing import Dict
 
 
-class SwitchModuleService(SwitchModule, EffectorService):
+class SwitchModuleService(EffectorService):
     def __init__(self, control_pin: int, effector_id: int) -> None:
-        super().__init__(control_pin)
+        self._switch_module = SwitchModule(control_pin)
         self._effector_id = effector_id
         
-    def activate_effector(self, input_dict: Dict[str]) -> None:
+    def activate_effector(self, input_dict: Dict[str, str]) -> None:
         if bool(input_dict["value"]):
-            self.on()
+            self._switch_module.on()
         else:
-            self.off()
+            self._switch_module.off()

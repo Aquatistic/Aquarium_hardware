@@ -4,7 +4,7 @@ from typing import Dict
 
 class EffectorService(ABC):
     @abstractmethod
-    def activate_effector(self, input_dict: Dict[str]) -> None:
+    def activate_effector(self, input_dict: Dict[str, str]) -> None:
         pass
     
     def set_effector_id(self, effector_id: int) -> None:
