@@ -14,5 +14,5 @@ if __name__ == "__main__":
     #     sensor.run()
     # backend.run()
     effectors = [SwitchModuleService(26, 1)]
-    backend = EffectorBackendInteractors("http://192.168.0.100:6868/api/v1/userEffector/connect/1", effectors)
+    backend = EffectorBackendInteractors("http://192.168.0.190:6868/api/v1/userEffector/connect/1", effectors)
     backend.run()
