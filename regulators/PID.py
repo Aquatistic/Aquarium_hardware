@@ -8,12 +8,12 @@ class PID:
         self.Kp = Kp
         self.Ti = Ti
         self.Td = Td
-        self.e = [0, 0, 0]
+        self.e = [0.0, 0.0, 0.0]
         self.x1 = 0  # to be removed
         self.x2 = 0  # to be removed
         self.u = self.get_current_control_signal()
         self.y = self.get_current_y()
-        self.y = self.get_current_setpoint()
+        self.y_zad = self.get_current_setpoint()
         self.Tp = 0.5  # to be calculated dynamically?
         self.r0, self.r1, self.r2 = self.calculate_pid_variables()
 
@@ -37,7 +37,7 @@ class PID:
         self.x2 = x2
         return 1.2 * (1 - np.exp(-1.5 * self.x1)).item()
 
-    def calculate_pid_variables(self) -> tuple[float]:
+    def calculate_pid_variables(self) -> tuple[float, float, float]:
         r0 = self.Kp * (1 + (self.Tp / (2 * self.Ti)) + (self.Td / self.Tp))
         r1 = self.Kp * ((self.Tp / (2 * self.Ti)) - 2 * (self.Td / self.Tp) - 1)
         r2 = self.Kp * self.Td / self.Tp
@@ -53,7 +53,10 @@ class PID:
 
     def calculate_control_signal(self) -> float:
         return (
-            self.r2 * self.e[-3] + self.r1 * self.e[-2] + self.r0 * self.e[-1] + self.u
+            self.r2 * self.e[-3]
+            + self.r1 * self.e[-2]
+            + self.r0 * self.e[-1]
+            + self.u[-1]
         )
 
     def set_u(self) -> None:
@@ -67,8 +70,8 @@ class PID:
         self.e = new_e_list[-3:]
 
     def main_loop(self) -> None:
-        self.set_current_y()
-        r0, r1, r2 = self.calculate_pid_variables()
+        self.get_current_y()
+        self.calculate_pid_variables()
         self.set_e()
         self.set_u()
 
