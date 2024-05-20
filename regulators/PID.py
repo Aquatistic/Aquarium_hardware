@@ -10,32 +10,10 @@ class PID:
         self.Td = Td
         self.Tp = Tp
         self.e = [0.0, 0.0, 0.0]
-        self.x1 = 0
-        self.x2 = 0
-        self.u = self.get_current_control_signal()
-        self.y = self.get_current_y()
-        self.y_zad = self.get_current_setpoint()
         self.r0, self.r1, self.r2 = self.calculate_pid_variables()
 
-    @staticmethod
-    def get_current_control_signal() -> List[float]:
-        """This method is used at the beginning or when there is a change between manual and auto.
-        Current Implementation is temporary. Used only in constructor"""
-        return [0, 0, 0, 0, 0]
-
-    def get_current_y(self) -> float:
-        """This should be loaded from raspberry pi - temporary implementation
-        In my case it would be function that will make it easy to test PID"""
-        alpha1 = -1.489028
-        alpha2 = 0.535261
-        beta1 = 0.012757
-        beta2 = 0.010360
-        g1 = (np.exp(7.5 * self.u[-5]) - 1) / (np.exp(7.5 * self.u[-5]) + 1)
-        x1 = -alpha1 * self.x1 + self.x2 + beta1 * g1
-        x2 = -alpha2 * self.x1 + beta2 * g1
-        self.x1 = x1
-        self.x2 = x2
-        return 1.2 * (1 - np.exp(-1.5 * self.x1)).item()
+    def __call__(self, u, y, y_zad):
+        return self.main_loop(u, y, y_zad)
 
     def calculate_pid_variables(self) -> tuple:
         r0 = self.Kp * (1 + (self.Tp / (2 * self.Ti)) + (self.Td / self.Tp))
@@ -44,36 +22,20 @@ class PID:
         return r0, r1, r2
 
     @staticmethod
-    def get_current_setpoint() -> float:
-        """Fetched from user"""
-        return 0.3
+    def calculate_error(y, y_zad) -> float:
+        return y_zad - y
 
-    def calculate_error(self) -> float:
-        return self.y_zad - self.y
+    def calculate_control_signal(self, u) -> float:
+        return self.r2 * self.e[-3] + self.r1 * self.e[-2] + self.r0 * self.e[-1] + u
 
-    def calculate_control_signal(self) -> float:
-        return (
-            self.r2 * self.e[-3]
-            + self.r1 * self.e[-2]
-            + self.r0 * self.e[-1]
-            + self.u[-1]
-        )
-
-    def set_u(self) -> None:
-        current_u = self.calculate_control_signal()
-        self.u.append(current_u)
-        self.u = self.u[-5:]
-
-    def set_e(self) -> None:
-        current_e = self.calculate_error()
+    def set_e(self, y, y_zad) -> None:
+        current_e = self.calculate_error(y, y_zad)
         self.e.append(current_e)
         self.e = self.e[-3:]
 
-    def main_loop(self) -> float:
-        self.y = self.get_current_y()
-        self.set_e()
-        self.set_u()
-        return self.y
+    def main_loop(self, u, y, y_zad) -> float:
+        self.set_e(y, y_zad)
+        return self.calculate_control_signal(u)
 
 
 def main():
