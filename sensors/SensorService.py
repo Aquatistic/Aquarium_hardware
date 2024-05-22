@@ -10,7 +10,7 @@ class SensorService(ABC):
         pass
 
     def set_sensor_id(self, sensor_id: int) -> None:
-        return self._sensor_id
+        self._sensor_id = sensor_id
 
     def get_sensor_id(self) -> int:
         return self._sensor_id
