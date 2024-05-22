@@ -5,3 +5,4 @@ pylint==2.12.2
 w1thermsensor==2.3.0
 requests==2.31.0
 sseclient-py==1.8.0
+numpy==1.26.4
