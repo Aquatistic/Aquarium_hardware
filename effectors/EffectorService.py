@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Dict
 from datetime import datetime
+from threading import Thread
 
 
 class EffectorService(ABC):
@@ -9,12 +10,12 @@ class EffectorService(ABC):
         pass
     
     def activate_effector_in_the_future(self, input_dict: Dict[str, str]) -> None:
-        while datetime.datetime(input_dict['controllActivationMoment']) >= datetime.now():
+        while datetime.strptime(input_dict['controllActivationMoment'], "%Y-%m-%d %H:%M:%S") >= datetime.now():
             pass
         self.activate_effector(input_dict)
     
-    def send_controll_to_effector(self, input_dict: Dict[str, str])) -> None:
-        if datetime.datetime(input_dict['controllActivationMoment']) <= datetime.now():
+    def send_controll_to_effector(self, input_dict: Dict[str, str]) -> None:
+        if datetime.strptime(input_dict['controllActivationMoment'], "%Y-%m-%d %H:%M:%S") <= datetime.now():
             self.activate_effector(input_dict)
             return
         Thread(target=self.activate_effector_in_the_future, args=(input_dict,)).start()
