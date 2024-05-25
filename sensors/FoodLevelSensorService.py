@@ -14,8 +14,7 @@ class FoodLevelSensorService(FoodLevelSensor, SensorService):
 
     def get_measurement_json(self) -> dict:
         return {
-            "userSensor": self._sensor_id,
-            alarmStatus: self.senses_food(),
+            "alarmStatus": self.senses_food(),
             "measurementValue": self.senses_food(),
             "measurementTimestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         }
