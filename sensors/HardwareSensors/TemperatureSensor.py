@@ -1,6 +1,6 @@
 from w1thermsensor import W1ThermSensor
 
-TEMPERATURE_OFFSET = -20.0
+TEMPERATURE_OFFSET = -10.0
 
 
 class TemperatureSensor:
