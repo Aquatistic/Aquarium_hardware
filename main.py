@@ -1,5 +1,6 @@
 from backend_interactors.SensorsBackendInteractors import SensorsBackendInteractors
 from sensors.WaterSensorService import WaterSensorService
+from sensors.TemperatureSensorService import TemperatureSensorService
 from effectors.LedStripService import LedStripService
 from effectors.SwitchModuleService import SwitchModuleService
 from backend_interactors.EffectorBackendInteractor import EffectorBackendInteractors
