@@ -1,12 +1,13 @@
 from backend_interactors.SensorsBackendInteractors import SensorsBackendInteractors
 from sensors.WaterSensorService import WaterSensorService
+from effectors.LedStripService import LedStripService
 from effectors.SwitchModuleService import SwitchModuleService
 from backend_interactors.EffectorBackendInteractor import EffectorBackendInteractors
 from threading import Thread
 
 
 if __name__ == "__main__":
-    sensors = [WaterSensorService(23, 22, 1)]
+    sensors = [TemperatureSensorService(35, 1), WaterSensorService(23, 22, 2)]
     backend = SensorsBackendInteractors(
         "http://192.168.0.100:6868/api/v1/measurements/add", 10.0
     )
@@ -15,6 +16,6 @@ if __name__ == "__main__":
         sensor.run()
     backend_thread = Thread(target=self.backend.run)
     backend_thread.start()
-    effectors = [SwitchModuleService(26, 1)]
-    backend = EffectorBackendInteractors("http://192.168.0.190:6868/api/v1/userEffector/connect/1", effectors)
+    effectors = [SwitchModuleService(26, 1), LedStripService(18, 14, 15, 2)]
+    backend = EffectorBackendInteractors("http://192.168.0.100:6868/api/v1/userEffector/connect/1", effectors)
     backend.run()
