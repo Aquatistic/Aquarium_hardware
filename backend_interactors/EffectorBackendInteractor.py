@@ -22,7 +22,6 @@ class EffectorBackendInteractors:
             print(effector_control_event)
             try:
                 for effector in self._effectors:
-                    print(type(effector))
                     if effector.get_effector_id() == int(effector_control_event["effectorId"]):
                         effector.send_controll_to_effector(effector_control_event)
                         break
