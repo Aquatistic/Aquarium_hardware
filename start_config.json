@@ -1,5 +1,5 @@
 {
-    "host_url": "http://localhost:5000",
+    "host_url": "http://192.168.0.190:6868",
     "aquarium_id": 1,
     "sensors": [
         {
