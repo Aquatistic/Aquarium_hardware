@@ -35,4 +35,6 @@ class LedStrip:
 
 if __name__ == "__main__":
     led_strip = LedStrip(18, 14, 15)
-    led_strip.set_brightness(0.8)
+    led_strip.set_brightness(1.0)
+    while True:
+        pass
