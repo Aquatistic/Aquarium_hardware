@@ -47,7 +47,7 @@ def generate_effectors_from_list(effector_description_list: List[Dict[str, str]]
 
 
 def load_setup_from_dict(input_data: Dict[str, str]):
-    return generate_effectors_from_list(data["effectors"]), generate_sensors_from_list(data["sensors"])
+    return generate_effectors_from_list(input_data["effectors"]), generate_sensors_from_list(input_data["sensors"])
 
 
 if __name__ == "__main__":

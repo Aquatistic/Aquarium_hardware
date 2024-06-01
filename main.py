@@ -2,6 +2,7 @@ from backend_interactors.SensorsBackendInteractors import SensorsBackendInteract
 from backend_interactors.EffectorBackendInteractor import EffectorBackendInteractors
 from backend_interactors.SetupLoader import load_setup_from_dict
 from threading import Thread
+import json
 
 def main():
     with open('start_config.json') as f:
