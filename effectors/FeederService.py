@@ -1,6 +1,6 @@
 from effectors.HardwareEffectors.Feeder import Feeder
 from effectors.EffectorService import EffectorService
-from typing import Dict
+from typing import Dict, List
 
 
 class FeederService(Feeder, EffectorService):

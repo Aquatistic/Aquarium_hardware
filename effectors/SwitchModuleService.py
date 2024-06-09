@@ -9,7 +9,8 @@ class SwitchModuleService(EffectorService):
         self._effector_id = effector_id
         
     def activate_effector(self, input_dict: Dict[str, str]) -> None:
-        if bool(input_dict["value"]):
-            self._switch_module.on()
-        else:
-            self._switch_module.off()
+        self._switch_module.toggle()
+        # if bool(input_dict["value"]):
+            # self._switch_module.on()
+        # else:
+            # self._switch_module.off()
