@@ -1,23 +1,25 @@
 from backend_interactors.SensorsBackendInteractors import SensorsBackendInteractors
-from sensors.WaterSensorService import WaterSensorService
-from sensors.TemperatureSensorService import TemperatureSensorService
-from effectors.LedStripService import LedStripService
-from effectors.SwitchModuleService import SwitchModuleService
 from backend_interactors.EffectorBackendInteractor import EffectorBackendInteractors
+from backend_interactors.SetupLoader import load_setup_from_dict
 from threading import Thread
+import json
+
+def main():
+    with open('start_config.json') as f:
+        input_data = json.load(f)
+    effectors, sensors = load_setup_from_dict(input_data)
+    sensor_backend = SensorsBackendInteractors(
+        input_data["host_url"] + "/api/v1/measurements/add", 10.0
+    )
+    for sensor in sensors:
+        sensor.set_backend_interactor(sensor_backend)
+        sensor.run()
+    backend_thread = Thread(target= sensor_backend.run)
+    backend_thread.start()
+    
+    effector_backend = EffectorBackendInteractors(input_data["host_url"] + f"/api/v1/userEffector/connect/{input_data['aquarium_id']}", effectors)
+    effector_backend.run()
 
 
 if __name__ == "__main__":
-    sensors = [TemperatureSensorService(35, 1), WaterSensorService(23, 22, 2)]
-    backend = SensorsBackendInteractors(
-        "http://192.168.0.190:6868/api/v1/measurements/add", 10.0
-    )
-    for sensor in sensors:
-        sensor.set_backend_interactor(backend)
-        sensor.run()
-    backend_thread = Thread(target= backend.run)
-    backend_thread.start()
-
-    effectors = [SwitchModuleService(26, 2), LedStripService(1, 18, 14, 15)]
-    backend = EffectorBackendInteractors("http://192.168.0.190:6868/api/v1/userEffector/connect/1", effectors)
-    backend.run()
+    main()

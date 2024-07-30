@@ -1,0 +1,32 @@
+{
+    "host_url": "http://192.168.0.190:6868",
+    "aquarium_id": 1,
+    "sensors": [
+        {
+            "sensor_id": 1,
+            "type": "temperature"
+        },
+        {
+            "sensor_id": 2,
+            "type": "water_level"
+        },
+        {
+            "sensor_id": 3,
+            "type": "food_level"
+        }
+    ],
+    "effectors": [
+        {
+            "effector_id": 1,
+            "type": "led_strip"
+        },
+        {
+            "effector_id": 2,
+            "type": "feeder"
+        },
+        {
+            "effector_id": 3,
+            "type": "switch"
+        }
+    ]
+}
